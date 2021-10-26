@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <title>C104</title>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            background-color: aquamarine;
+            align-items: center;
+        }
+        .list{
+            background-color: blue;
+            color: white;
+            height: 30px;
+            width: 50px;
+        }
+        .camhold{
+            border: 1px solid black;
+            height: 300px;
+            width: 400px;
+        }
+        .cam{
+            border: 1px dashed;
+            height: 300px;
+            width: 300px;
+        }
+        .ci{
+            border: 2px dashed orangered;
+            height: 300px;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+    <h1>Image Recognitions</h1><br><br>
+    <p class="list">Car</p>
+    <p class="list">Card</p>
+    Live:
+    <div class="camhold">
+        <div id="cam">
+
+        </div>
+    </div><br><br>
+    Captured Image:
+    <div id="cih">
+
+    </div><br><br>  
+    <button onclick="ts()">Take Snapshot</button>
+    <button onclick="identify()">Identify</button> 
+    <div>
+        <h6>Identified:-</h6>
+        <p class="identified"></p>
+        <h6>Accuracy:-</h6>
+        <p class="accuracy"></p>
+    </div>
+</center>
+</body>
+<script>
+    Webcam.set({
+        width: 350,
+        height: 300,
+        image_format: 'png',
+        png_quality: 90
+    })
+    camera = document.getElementById("cam")
+    Webcam.attach('#camera')
+    function ts(){
+        Webcam.snap(function(data_uri) {
+            document.getElementById('cih').innerHTML = '<img id="ci" src="'+data_uri+'"/>'
+        })
+    }
+    classifier = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/VMziindJm/model.json', modelLoaded)
+</script>
+
+</html>
